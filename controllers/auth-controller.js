@@ -6,7 +6,6 @@ const createUser = async (req, res) => {
   const { username, password } = req.body;
   const SALT_ROUNDS = Number(process.env.SALT_ROUNDS);
   const existingUser = await User.findOne({ username }).exec();
-  console.log("createUser", existingUser);
   if (existingUser) {
     return res.status(409).json({ message: "user already exists" });
   }
@@ -27,7 +26,7 @@ const authenticateUser = async (req, res) => {
     return res.status(401).json({ message: "Unauthorized" });
   }
   var token = jwt.sign(
-    { username, id: requiredUser._id },
+    { username, idd: requiredUser._id },
     process.env.JWT_SECRET
   );
   return res.status(200).json({ message: "User authenticated", token });

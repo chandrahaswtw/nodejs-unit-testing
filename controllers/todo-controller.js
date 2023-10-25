@@ -1,8 +1,9 @@
 const Todo = require("./../models/todo-model");
 
-const getTodos = async (req, res, err) => {
+const getTodos = async (req, res, next) => {
   try {
     const todos = await Todo.find({ userId: req.user._id });
+    res.status(200);
     return res.json({ todos });
   } catch (err) {
     next(err);
@@ -14,7 +15,8 @@ const createTodo = async (req, res, next) => {
     const { name } = req.body;
     const todo = new Todo({ name, userId: req.user._id });
     await todo.save();
-    return res.status(200).json({ message: `${name} is saved` });
+    res.status(200);
+    return res.json({ message: `${name} is saved` });
   } catch (err) {
     next(err);
   }

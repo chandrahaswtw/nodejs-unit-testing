@@ -26,7 +26,7 @@ app.use("/todo", todoRoutes);
 app.use("/auth", authRoutes);
 
 app.use((err, req, res, next) => {
-  res.status(500).json({ error: err?.message });
+  res.status(err?.statusCode || 500).json({ error: err?.message });
 });
 
 const PORT = process.env.PORT || 3000;
